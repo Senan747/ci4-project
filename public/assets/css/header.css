@@ -1,0 +1,22 @@
+.header {
+  background-color: #2a3538;
+  width: 100%;
+  height: 56px;
+  display: flex;
+  flex-direction: row;
+  padding: 0px 32px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+ul {
+    display: flex;
+    flex-direction: row;
+    gap: 56px;
+    color: white;
+}
+
+.logo-container {
+    margin: 9px 0px;
+}
+
