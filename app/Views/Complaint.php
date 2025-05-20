@@ -48,7 +48,7 @@
                             </div>
                             <div class="input-container gap">
                                 <label for="mobile">Telefon nömrəsi <span class="error-msg-inline"></span></label>
-                                <input type="text" placeholder="Telefon nömrəsi" id="mobile">
+                                <input type="text" placeholder="Telefon nömrəsi" id="phone">
                             </div>
                             <div class="input-container">
                                 <label for="email">E-mail <span class="error-msg-inline"></span></label>
@@ -69,11 +69,11 @@
                             </div>
                             <div class="input-container">
                                 <label for="date">Hadisənin tarixi <span class="error-msg-inline"></span></label>
-                                <input type="date" placeholder="Date" id="date">
+                                <input type="date" placeholder="Date" id="event_date">
                             </div>
                             <div class="input-container gap">
                                 <label for="mobile">Saat aralığı <span class="error-msg-inline"></span></label>
-                                <input type="text" placeholder="Saat" id="hour">
+                                <input type="text" placeholder="Saat" id="hours_range">
                             </div>
                         </div>
                         
@@ -86,7 +86,7 @@
                         <div class="form">
                             <div class="input-container textarea">
                                 <label for="complaint">Şikayət detalları <span class="error-msg-inline"></span></label>
-                                <textarea rows="7" placeholder="Detallar" id="complaintDetails"></textarea>
+                                <textarea rows="7" placeholder="Detallar" id="complain_details"></textarea>
                             </div>
                             <div class="input-container textarea">
                                 <label for="complaint">İştirak edən şəxslər, vəzifələri <span class="error-msg-inline"></span></label>
@@ -104,7 +104,7 @@
                                 <span>Zəhmət olmasa, əlavə edə biləcəyiniz sənəd, şəkil, video və səs materiallarını daxil edin</span>
                                 <br>
                                 <strong style="color:#1e40af;">Klikləyin və ya faylları bura atın</strong>
-                                <input type="file" id="fileInput" multiple>
+                                <input type="file" id="fileInput" name="files[]"  multiple>
                             </label>
                             
                             <ul class="file-list" id="fileList"></ul>

@@ -25,31 +25,16 @@ uploadLabel.addEventListener("drop", (e) => {
 function addFiles(files) {
   for (let i = 0; i < files.length; i++) {
     const file = files[i];
-    const reader = new FileReader();
-    reader.onload = function (e) {
-      const base64 = e.target.result;
-      currentFiles.push({
-        name: file.name,
-        size: file.size,
-        type: file.type,
-        content: base64,
-      });
-      renderFileList();
-      saveFilesToLocal();
-    };
-    reader.readAsDataURL(file); // faylı base64 formatda oxuyur
+    currentFiles.push(file); // Fayl obyektini əlavə et
   }
-}
-
-function saveFilesToLocal() {
-  localStorage.setItem("filesData", JSON.stringify(currentFiles));
-}
-
-function loadFilesFromLocal() {
-  const filesStr = localStorage.getItem("filesData");
-  if (!filesStr) return;
-  currentFiles = JSON.parse(filesStr);
   renderFileList();
+  saveFilesToLocal();
+}
+
+function removeFile(index) {
+  currentFiles.splice(index, 1);
+  renderFileList();
+  saveFilesToLocal();
 }
 
 function renderFileList() {
@@ -64,11 +49,30 @@ function renderFileList() {
   });
 }
 
-function removeFile(index) {
-  currentFiles.splice(index, 1);
-  renderFileList();
+function saveFilesToLocal() {
+  const serialized = currentFiles.map((file) => ({
+    name: file.name,
+    size: file.size,
+    type: file.type,
+  }));
+  localStorage.setItem("filesMeta", JSON.stringify(serialized));
 }
 
+function loadFilesFromLocal() {
+  const saved = localStorage.getItem("filesMeta");
+  if (saved) {
+    try {
+      currentFiles = JSON.parse(saved).map(
+        (meta) => new File([""], meta.name, meta)
+      );
+      renderFileList();
+    } catch (e) {
+      console.warn("Faylları yükləmək mümkün olmadı");
+    }
+  }
+}
+
+// Modal və Step idarəsi
 const overlay = document.querySelector(".overlay");
 const outlineButton = document.querySelector(".outline-button");
 const filledButton = document.querySelector(".filled-button");
@@ -81,67 +85,69 @@ const file = document.getElementById("file");
 const addText = document.querySelector(".add-text");
 const completeButton = document.querySelector(".complete-button");
 const inputs = document.querySelectorAll("input, textarea");
+const contactStep = document.querySelector(".contact-step");
 
 const formStorageKey = "formData";
 const stepStorageKey = "formStep";
 const errorClass = "input-error";
 
-let k = 1; // default step
+let k = 1;
+let anonymous = false;
 
-// Modal görünüşü
 document.addEventListener("DOMContentLoaded", () => {
-  loadFilesFromLocal();
+  // loadFilesFromLocal();
 
   const isModalSeen = localStorage.getItem("anonymousModalSeen");
-  if (isModalSeen) {
-    overlay.style.display = "none";
-  } else {
+  if (!isModalSeen) {
     overlay.style.display = "flex";
+  } else {
+    overlay.style.display = "none";
+  }
+
+  if (localStorage.getItem("anonymous")) {
+    anonymous = true;
+    k = 2;
+    if (contact) {
+      contact.parentNode.removeChild(contact);
+    }
+    contactStep && (contactStep.style.display = "none");
+    exIcon.style.display = "none";
   }
 
   loadFromLocal();
+  updateStepView();
 });
 
-const contactStep = document.querySelector(".contact-step");
 outlineButton.addEventListener("click", () => {
   overlay.style.display = "none";
   k = 1;
-  hideModalAndRemember();
+  localStorage.removeItem("anonymous");
+  localStorage.setItem("anonymousModalSeen", "true");
   updateStepView();
 });
 
-let anonymous = false;
 filledButton.addEventListener("click", () => {
   overlay.style.display = "none";
-  k = 2;
-  contact.classList.remove("show");
-  contact.classList.add("hidden");
-  occur.classList.add("show");
-  occur.classList.remove("hidden");
-  contactStep.style.display = "none";
-  contact.parentNode.removeChild(contact);
-  hideModalAndRemember();
-  updateStepView();
-
   anonymous = true;
+  k = 2;
+  localStorage.setItem("anonymous", true);
+  localStorage.setItem("anonymousModalSeen", "true");
 
+  if (contact) {
+    contact.parentNode.removeChild(contact);
+  }
+  contactStep && (contactStep.style.display = "none");
   exIcon.style.display = "none";
+  updateStepView();
 });
 
-function hideModalAndRemember() {
-  overlay.style.display = "none";
-  localStorage.setItem("anonymousModalSeen", "true");
-}
-
-// Navigasiya
 nextIcon.addEventListener("click", () => {
   if (
     (k === 1 && !validateStep1()) ||
     (k === 2 && !validateStep2()) ||
     (k === 3 && !validateStep3())
-  ) {
+  )
     return;
-  }
 
   k++;
   updateStepView();
@@ -149,36 +155,34 @@ nextIcon.addEventListener("click", () => {
 
 exIcon.addEventListener("click", () => {
   k--;
-  if (anonymous && k != 2) {
-    updateStepView();
-  }
   if (anonymous && k == 2) {
     exIcon.style.display = "none";
   }
+  updateStepView();
 });
 
-// View dəyişdirici
 function updateStepView() {
   [contact, occur, complaint, file].forEach((step, i) => {
-    if (k === i + 1) {
-      step.classList.add("show");
-      step.classList.remove("hidden");
-    } else {
-      step.classList.remove("show");
-      step.classList.add("hidden");
+    if (step) {
+      if (k === i + 1) {
+        step.classList.add("show");
+        step.classList.remove("hidden");
+      } else {
+        step.classList.remove("show");
+        step.classList.add("hidden");
+      }
     }
   });
 
-  if (k === 4) {
-    nextIcon.style.display = "none";
-    completeButton.classList.remove("disabled");
-  } else {
-    nextIcon.style.display = "flex";
-    completeButton.classList.add("disabled");
-  }
-
-  exIcon.style.display = k === 1 ? "none" : "flex";
+  nextIcon.style.display = k === 4 ? "none" : "flex";
+  completeButton.classList.toggle("disabled", k !== 4);
   addText.classList.toggle("hidden", k !== 2 && k !== 4);
+
+  if (anonymous) {
+    exIcon.style.display = k > 2 ? "flex" : "none";
+  } else {
+    exIcon.style.display = k > 1 ? "flex" : "none";
+  }
 
   saveToLocal();
 }
@@ -186,14 +190,11 @@ function updateStepView() {
 // Validasiya funksiyaları
 function validateStep1() {
   let valid = true;
-
-  const requiredFields = ["name", "surname", "mobile", "email"];
+  const requiredFields = ["name", "surname", "phone", "email"];
   requiredFields.forEach((id) => {
     const input = document.getElementById(id);
-    const value = input.value.trim();
-
-    removeError(input); // əvvəlki errorları təmizlə
-
+    const value = input?.value.trim();
+    removeError(input);
     if (!value) {
       showError(input, "Bu xana boş buraxıla bilməz");
       valid = false;
@@ -202,21 +203,15 @@ function validateStep1() {
       valid = false;
     }
   });
-
   return valid;
-}
-
-function isValidEmail(email) {
-  const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  return regex.test(email);
 }
 
 function validateStep2() {
   let valid = true;
-  const requiredFields = ["location", "date", "hour"];
+  const requiredFields = ["location", "event_date", "hours_range"];
   requiredFields.forEach((id) => {
     const input = document.getElementById(id);
-    if (!input.value.trim()) {
+    if (!input?.value.trim()) {
       showError(input, "Bu xana boş buraxıla bilməz");
       valid = false;
     }
@@ -226,10 +221,10 @@ function validateStep2() {
 
 function validateStep3() {
   let valid = true;
-  const requiredFields = ["complaintDetails", "people"];
+  const requiredFields = ["complain_details", "people"];
   requiredFields.forEach((id) => {
     const input = document.getElementById(id);
-    if (!input.value.trim()) {
+    if (!input?.value.trim()) {
       showError(input, "Bu xana boş buraxıla bilməz");
       valid = false;
     }
@@ -237,7 +232,12 @@ function validateStep3() {
   return valid;
 }
 
-// LocalStorage
+function isValidEmail(email) {
+  const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return regex.test(email);
+}
+
+// LocalStorage form
 function saveToLocal() {
   const data = {};
   inputs.forEach((el) => {
@@ -258,11 +258,9 @@ function loadFromLocal() {
   if (!isNaN(savedStep) && savedStep >= 1 && savedStep <= 4) {
     k = savedStep;
   }
-
-  updateStepView();
 }
 
-// Input dəyişəndə yadda saxla
+// Input dəyişdikdə yadda saxla
 inputs.forEach((el) => {
   el.addEventListener("input", () => {
     saveToLocal();
@@ -271,80 +269,112 @@ inputs.forEach((el) => {
 });
 
 function showError(input, message) {
-  removeError(input);
-
+  if (!input) return;
   input.classList.add(errorClass);
-
   const label = input.closest(".input-container")?.querySelector("label");
   const inlineError = label?.querySelector(".error-msg-inline");
-
-  if (inlineError) {
-    inlineError.textContent = message;
-  }
+  if (inlineError) inlineError.textContent = message;
 }
 
 function removeError(input) {
+  if (!input) return;
   input.classList.remove(errorClass);
-
   const label = input.closest(".input-container")?.querySelector("label");
   const inlineError = label?.querySelector(".error-msg-inline");
-
-  if (inlineError) {
-    inlineError.textContent = "";
-  }
+  if (inlineError) inlineError.textContent = "";
 }
 
-function addFiles(files) {
-  for (let i = 0; i < files.length; i++) {
-    const file = files[i];
-    currentFiles.push(file); // Fayl obyektini saxla
-  }
-  renderFileList();
-}
-
+// Göndər düyməsi
 document
   .querySelector(".complete-button")
   .addEventListener("click", async () => {
-    if (k !== 4) return; // Yalnız son addımda icra olunsun
+    if (k !== 4) return;
 
-    // Validasiya
-    if (!validateStep1() || !validateStep2() || !validateStep3()) {
+    if (
+      !validateStep2() ||
+      !validateStep3() ||
+      (!anonymous && !validateStep1())
+    ) {
       alert("Zəhmət olmasa bütün xanaları düzgün doldurun.");
       return;
     }
 
-    const formData = new FormData();
-
-    // Input-ları əlavə et
+    const payload = {};
     inputs.forEach((input) => {
       if (input.id && input.value.trim()) {
-        formData.append(input.id, input.value);
+        payload[input.id] = input.value;
       }
     });
 
-    // Faylları əlavə et (currentFiles içində File obyektləri saxlanılır)
-    currentFiles.forEach((file, index) => {
-      formData.append("files[]", file);
-    });
+    payload.is_anonymous = anonymous;
 
     try {
-      const response = await fetch("/api/complaint-submit", {
+      const response = await fetch("/api/create-complaint", {
         method: "POST",
-        body: formData,
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
       });
 
       const data = await response.json();
-
       if (data.status === "ok") {
-        alert("Şikayət uğurla göndərildi!");
-        // Formu sıfırla
+        const formData = new FormData();
+
+        const fileInput = document.getElementById("fileInput");
+
+        for (let i = 0; i < fileInput.files.length; i++) {
+          formData.append("files[]", fileInput.files[i]);
+        }
+
+        fetch(`/api/upload-files/${data?.id}`, {
+          method: "POST",
+          body: formData,
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            console.log("Uğurla göndərildi:", data);
+          })
+          .catch((error) => {
+            console.error("Xəta baş verdi:", error);
+          });
         localStorage.clear();
         window.location.reload();
       } else {
         alert("Xəta baş verdi: " + (data.message || "Naməlum xəta"));
       }
-    } catch (error) {
-      console.error("Serverə göndərərkən xəta:", error);
+    } catch (err) {
+      console.error("Serverə göndərərkən xəta:", err);
       alert("Server bağlantı xətası!");
     }
   });
+
+function generateUsername() {
+  const prefix = "user";
+  const randomNum = Math.floor(Math.random() * 100000);
+  return `${prefix}${randomNum}`;
+}
+
+function submitForm() {
+  const pass1 = document.getElementById("password1").value;
+  const pass2 = document.getElementById("password2").value;
+  const message = document.getElementById("message");
+
+  if (!pass1 || !pass2) {
+    message.textContent = "Zəhmət olmasa hər iki şifrəni daxil edin.";
+    return;
+  }
+
+  if (pass1 !== pass2) {
+    message.textContent = "Şifrələr uyğun gəlmir!";
+  } else {
+    message.style.color = "green";
+    message.textContent = "Şifrə uğurla təyin edildi!";
+    // burda backend-ə göndərə bilərsən və ya yönləndirə bilərsən
+  }
+}
+
+window.onload = () => {
+  const usernameInput = document.getElementById("username");
+  usernameInput.value = generateUsername();
+};

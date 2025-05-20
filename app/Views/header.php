@@ -7,7 +7,10 @@
   <link rel="stylesheet" href="<?= base_url() ?>assets/css/general.css">
   <link rel="stylesheet" href="<?= base_url() ?>assets/css/header.css">
   <link rel="stylesheet" href="<?= base_url() ?>assets/css/home.css">
-  <link rel="stylesheet" href="<?= base_url() ?>assets/css/complaint.css"
+  <link rel="stylesheet" href="<?= base_url() ?>assets/css/complaint.css">
+  <?php if (strpos(current_url(), 'submit') !== false): ?>
+    <link rel="stylesheet" href="<?= base_url() ?>assets/css/complete.css">
+  <?php endif; ?>
   <meta name="theme-color" content="rgba(0, 0, 0, 0.4)">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

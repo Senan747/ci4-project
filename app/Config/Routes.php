@@ -7,3 +7,5 @@ use CodeIgniter\Router\RouteCollection;
  */
 $routes->get('/', 'Home::index');
 $routes->get('/new-complaint', 'ComplaintController::index');
+$routes->post('api/create-complaint', 'ComplaintController::submitComplaint');
+$routes->post('api/upload-files/(:num)', 'ComplaintController::submitFiles/$1');
