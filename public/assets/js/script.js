@@ -333,13 +333,13 @@ document
         })
           .then((response) => response.json())
           .then((data) => {
-            console.log("Uğurla göndərildi:", data);
+            // console.log("Uğurla göndərildi:", data);
+            window.location.href = "/register";
+            localStorage.clear();
           })
           .catch((error) => {
             console.error("Xəta baş verdi:", error);
           });
-        localStorage.clear();
-        window.location.reload();
       } else {
         alert("Xəta baş verdi: " + (data.message || "Naməlum xəta"));
       }
@@ -348,33 +348,3 @@ document
       alert("Server bağlantı xətası!");
     }
   });
-
-function generateUsername() {
-  const prefix = "user";
-  const randomNum = Math.floor(Math.random() * 100000);
-  return `${prefix}${randomNum}`;
-}
-
-function submitForm() {
-  const pass1 = document.getElementById("password1").value;
-  const pass2 = document.getElementById("password2").value;
-  const message = document.getElementById("message");
-
-  if (!pass1 || !pass2) {
-    message.textContent = "Zəhmət olmasa hər iki şifrəni daxil edin.";
-    return;
-  }
-
-  if (pass1 !== pass2) {
-    message.textContent = "Şifrələr uyğun gəlmir!";
-  } else {
-    message.style.color = "green";
-    message.textContent = "Şifrə uğurla təyin edildi!";
-    // burda backend-ə göndərə bilərsən və ya yönləndirə bilərsən
-  }
-}
-
-window.onload = () => {
-  const usernameInput = document.getElementById("username");
-  usernameInput.value = generateUsername();
-};

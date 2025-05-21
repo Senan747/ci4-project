@@ -8,13 +8,20 @@
   <link rel="stylesheet" href="<?= base_url() ?>assets/css/header.css">
   <link rel="stylesheet" href="<?= base_url() ?>assets/css/home.css">
   <link rel="stylesheet" href="<?= base_url() ?>assets/css/complaint.css">
-  <?php if (strpos(current_url(), 'submit') !== false): ?>
+  <?php if (strpos(current_url(), 'register') !== false): ?>
     <link rel="stylesheet" href="<?= base_url() ?>assets/css/complete.css">
   <?php endif; ?>
   <meta name="theme-color" content="rgba(0, 0, 0, 0.4)">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-Hd4Y3Qe8cUGzKvvnSODm8Z/EiA0yAY5OtkGpO5Y0kkRfA2+3YxhwYUyoySYBzXebHskhxFdul+Bb99fQSLf+g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <!-- Toastify CSS -->
+  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+  <!-- Toastify JS -->
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+
   <title>ReportPoint Customs</title>
 </head>
 <body>

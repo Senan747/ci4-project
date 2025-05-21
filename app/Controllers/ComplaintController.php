@@ -3,6 +3,7 @@ namespace App\Controllers;
 use App\Controllers\BaseController;
 use App\Models\ComplaintFilesModel;
 use App\Models\ComplaintModel;
+use App\Models\UsersModel;
 
 class ComplaintController extends BaseController {
     public function index() {
@@ -16,9 +17,19 @@ class ComplaintController extends BaseController {
 
         $data = $this->request->getJSON(true);
 
+        $characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+        $username = '';
+        for ($i = 0; $i < 10; $i++) {
+            $username .= $characters[rand(0, strlen($characters) - 1)];
+        }
 
         if($model->insert($data)){
             $complaint_id = $model->getInsertID();
+
+            session()->set([
+                'complaint_id'  => $complaint_id,
+                'username'      => $username,
+            ]);
 
             return $this->response->setStatusCode('201')->setJSON(['status' => 'ok', 'message' => 'Complaint created', 'id' => $complaint_id]);
         } else {
@@ -59,5 +70,30 @@ class ComplaintController extends BaseController {
         return $this->response->setStatusCode(400)->setJSON([
             'error' => 'No files found'
         ]);
-    }    
+    } 
+    
+    public function register() {
+        $data = [
+            'username'      => session()->get('username')
+        ];
+
+        return view('header').
+               view('Submit', $data).
+               view('footer');
+    }
+
+    public function createUser() {
+        $complaint_id = session()->get('complaint_id');
+        $model = new UsersModel();
+        $data = $this->request->getJson(true);
+
+        $data['complaint_id'] = $complaint_id;
+        $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
+
+        if($model->insert($data)){
+            return $this->response->setJSON(['status' => 'ok', 'message' => 'User created']);
+        } else {
+            return $this->response->setJSON(['status' => 'error', 'message' => 'Insert failed']);
+        }
+    }
 }
