@@ -11,6 +11,9 @@
   <?php if (strpos(current_url(), 'register') !== false): ?>
     <link rel="stylesheet" href="<?= base_url() ?>assets/css/complete.css">
   <?php endif; ?>
+  <?php if (strpos(current_url(), 'follow') !== false || strpos(current_url(), 'user') !== false): ?>
+    <link rel="stylesheet" href="<?= base_url() ?>assets/css/follow.css">
+  <?php endif; ?>
   <meta name="theme-color" content="rgba(0, 0, 0, 0.4)">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

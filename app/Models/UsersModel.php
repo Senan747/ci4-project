@@ -5,6 +5,6 @@ use CodeIgniter\Model;
 
 class UsersModel extends Model {
     protected $table = 'users';
-    protected $allowedFields = ['complaint_id', 'username', 'password'];
+    protected $allowedFields = ['id', 'complaint_id', 'username', 'password'];
     protected $useTimestamps = false;
 }

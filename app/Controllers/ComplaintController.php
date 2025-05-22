@@ -17,6 +17,8 @@ class ComplaintController extends BaseController {
 
         $data = $this->request->getJSON(true);
 
+        // print_r($data); die;
+
         $characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
         $username = '';
         for ($i = 0; $i < 10; $i++) {

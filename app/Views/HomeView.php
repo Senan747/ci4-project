@@ -9,7 +9,7 @@
         </div>
         <div class="btns">
             <button class="btn-1" onclick="window.location.href='/new-complaint'">Şikayət et</button>
-            <button class="btn-2">Şikayətini izlə</button>
+            <button class="btn-2" onclick="window.location.href='/follow'">Şikayətini izlə</button>
         </div>
     </div>
 </div>

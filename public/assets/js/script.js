@@ -284,7 +284,7 @@ function removeError(input) {
   if (inlineError) inlineError.textContent = "";
 }
 
-// Göndər düyməsi
+
 document
   .querySelector(".complete-button")
   .addEventListener("click", async () => {
@@ -302,17 +302,18 @@ document
     const payload = {};
     inputs.forEach((input) => {
       if (input.id && input.value.trim()) {
+        console.log(input.id);
         payload[input.id] = input.value;
       }
     });
 
-    payload.is_anonymous = anonymous;
+    payload['is_anonymous'] = !!(localStorage.getItem("anonymous") === "true");
 
     try {
       const response = await fetch("/api/create-complaint", {
         method: "POST",
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json'
         },
         body: JSON.stringify(payload),
       });
