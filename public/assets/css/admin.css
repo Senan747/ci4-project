@@ -1,0 +1,130 @@
+.container {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 20px;
+  overflow-x: auto;
+  display: flex;
+  align-items: flex-start;
+  gap: 40px;
+  flex-direction: column;
+}
+
+.table-wrapper {
+  overflow-x: auto;
+}
+
+.complaints-table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+.complaints-header {
+  background-color: #f2f2f2;
+}
+
+.complaints-header-cell,
+.complaints-cell {
+  padding: 8px;
+  border: 1px solid #ccc;
+  text-align: left;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.complaints-header-cell {
+  font-weight: bold;
+}
+
+.edit-button {
+  padding: 5px 10px;
+  background-color: #2196f3;
+  color: white;
+  border: none;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.edit-button:hover {
+  background-color: #0b7dda;
+}
+
+.edit-container {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+.edit-title {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.edit-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.edit-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.edit-group label {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.edit-input,
+.edit-textarea {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  max-width: 100%;
+  resize: vertical;
+}
+
+.edit-input[readonly],
+.edit-textarea[readonly] {
+  background-color: #f9f9f9;
+  color: #666;
+}
+
+.edit-buttons {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.edit-save-btn {
+  background-color: #4caf50;
+  color: white;
+  padding: 10px 16px;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.edit-save-btn:hover {
+  background-color: #45a049;
+}
+
+.edit-cancel-btn {
+  text-decoration: none;
+  background-color: #ccc;
+  color: black;
+  padding: 10px 16px;
+  border-radius: 4px;
+}
+
+.edit-cancel-btn:hover {
+  background-color: #bbb;
+}
+
+a {
+    text-decoration: underline;
+    color: blue;
+}

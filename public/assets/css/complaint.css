@@ -314,3 +314,8 @@
   /* background-color: #fef2f2; */
 }
 
+
+a {
+  text-decoration: underline;
+  color: blue;
+}

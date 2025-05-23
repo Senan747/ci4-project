@@ -8,5 +8,5 @@ class ComplaintModel extends Model {
 
     protected $primaryKey = 'id';
 
-    protected $allowedFields = ['name', 'surname', 'email', 'phone', 'location', 'event_date', 'hours_range', 'complain_details', 'people', 'status', 'response', 'responser', 'created_at'];
+    protected $allowedFields = ['id', 'name', 'surname', 'email', 'phone', 'location', 'event_date', 'hours_range', 'complain_details', 'people', 'status', 'response', 'responser', 'created_at'];
 }

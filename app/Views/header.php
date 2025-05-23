@@ -11,6 +11,7 @@
   <?php if (strpos(current_url(), 'register') !== false): ?>
     <link rel="stylesheet" href="<?= base_url() ?>assets/css/complete.css">
   <?php endif; ?>
+  <link rel="stylesheet" href="<?= base_url() ?>assets/css/admin.css">
   <?php if (strpos(current_url(), 'follow') !== false || strpos(current_url(), 'user') !== false): ?>
     <link rel="stylesheet" href="<?= base_url() ?>assets/css/follow.css">
   <?php endif; ?>
@@ -36,13 +37,20 @@
       
     </div>
     <div>
-      <ul>
-        <li>Ana Səhifə</li>
-        <li>Haqqımızda</li>
-        <li>Gizliliyin qorunması</li>
-        <li>Prosedurlar</li>
-        <li>Əlaqə</li>
-      </ul>
+      <?php if(!strpos(current_url(), 'admin')): ?>
+        <ul>
+          <li>Ana Səhifə</li>
+          <li>Haqqımızda</li>
+          <li>Gizliliyin qorunması</li>
+          <li>Prosedurlar</li>
+          <li>Əlaqə</li>
+        </ul>
+      <?php else: ?>
+        <ul>
+          <li>Şikayətlər</li>
+          <li>Statistikalar</li>
+        </ul>
+      <?php endif; ?>
     </div>
   </div>
 </body>

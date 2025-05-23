@@ -1,0 +1,77 @@
+body {
+    font-family: 'Inter', sans-serif;
+    background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+    height: 100vh;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .login-card {
+    background: #fff;
+    padding: 40px;
+    border-radius: 16px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+    width: 360px;
+    text-align: center;
+  }
+  
+  .login-card h2 {
+    margin-bottom: 10px;
+    font-weight: 600;
+  }
+  
+  .login-card p {
+    margin-bottom: 30px;
+    color: #666;
+  }
+  
+  .input-group {
+    text-align: left;
+    margin-bottom: 20px;
+  }
+  
+  .input-group label {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 14px;
+    color: #333;
+  }
+  
+  .input-group input {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 14px;
+    outline: none;
+    transition: 0.3s;
+  }
+  
+  .input-group input:focus {
+    border-color: #4CAF50;
+  }
+  
+  button {
+    width: 100%;
+    padding: 12px;
+    background-color: #4CAF50;
+    border: none;
+    border-radius: 8px;
+    color: white;
+    font-weight: bold;
+    font-size: 16px;
+    cursor: pointer;
+    width: 386px;
+    transition: background 0.3s ease;
+  }
+  
+  button:hover {
+    background-color: #43a047;
+  }
+  
+  #message {
+    margin-top: 15px;
+    font-size: 14px;
+  }
