@@ -31,6 +31,7 @@ class ComplaintController extends BaseController {
             session()->set([
                 'complaint_id'  => $complaint_id,
                 'username'      => $username,
+                'isFormCompleted'    => true    
             ]);
 
             return $this->response->setStatusCode('201')->setJSON(['status' => 'ok', 'message' => 'Complaint created', 'id' => $complaint_id]);

@@ -11,7 +11,9 @@
   <?php if (strpos(current_url(), 'register') !== false): ?>
     <link rel="stylesheet" href="<?= base_url() ?>assets/css/complete.css">
   <?php endif; ?>
-  <link rel="stylesheet" href="<?= base_url() ?>assets/css/admin.css">
+  <?php if (strpos(current_url(), 'admin') !== false || strpos(current_url(), 'user') !== false): ?>
+    <link rel="stylesheet" href="<?= base_url() ?>assets/css/admin.css">
+  <?php endif; ?>
   <?php if (strpos(current_url(), 'follow') !== false || strpos(current_url(), 'user') !== false): ?>
     <link rel="stylesheet" href="<?= base_url() ?>assets/css/follow.css">
   <?php endif; ?>
@@ -37,7 +39,12 @@
       
     </div>
     <div>
-      <?php if(!strpos(current_url(), 'admin')): ?>
+      <?php if (strpos(current_url(), 'user/complaint')): ?>
+        <ul>
+          <li><a href="<?= base_url('logout') ?>">Çıxış et</a></li>
+        </ul>
+
+      <?php elseif (!strpos(current_url(), 'admin')): ?>
         <ul>
           <li>Ana Səhifə</li>
           <li>Haqqımızda</li>
@@ -45,10 +52,12 @@
           <li>Prosedurlar</li>
           <li>Əlaqə</li>
         </ul>
+
       <?php else: ?>
         <ul>
           <li>Şikayətlər</li>
           <li>Statistikalar</li>
+          <li><a href="<?= base_url('admin/logout') ?>">Çıxış et</a></li>
         </ul>
       <?php endif; ?>
     </div>

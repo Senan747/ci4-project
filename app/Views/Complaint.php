@@ -1,5 +1,5 @@
 <div class="total">
-    <div class="container">
+    <div class="container-complaint">
         <div class="left">
             <h1>Yeni Şikayət</h1>
             <ul>

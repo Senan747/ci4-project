@@ -24,15 +24,23 @@ class FollowController extends BaseController {
 
 
         if($user && password_verify($password, $user['password'])){
+            session()->set([
+                'username'          => $username,
+                'complaint_id'      => $user['complaint_id'],
+                'isUserLoggedIn'    => true,
+            ]);
            return $this->response->setJSON(['status' => 'ok', 'message' => 'login is successful', 'complaint_id' => $user['complaint_id']]);
+           
         } else {
             return $this->response->setJSON(['status' => 'error', 'message' => 'Username or password is not correct']);
         }
     }
 
-    public function user($complaint_id) {
+    public function user() {
         $model = new ComplaintModel();
         $filesModel = new ComplaintFilesModel();
+
+        $complaint_id = session()->get('complaint_id');
 
         $data = $model->where('id', $complaint_id)->first();
 
@@ -43,5 +51,11 @@ class FollowController extends BaseController {
         return  view('header').
                 view('FollowComplaint', $data).
                 view('footer');
+    }
+
+    public function logout() {
+        session()->destroy();
+
+        return redirect()->to('follow');
     }
 }

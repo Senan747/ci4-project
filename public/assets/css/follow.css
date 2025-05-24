@@ -1,10 +1,10 @@
-.total-login-container {
+.total-login-user-container {
   width: 100vw;
   height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-top: 300px;
+  /* margin-top: 300px; */
 }
 
 .login-container {
@@ -24,6 +24,7 @@
 .input-group {
   margin-bottom: 15px;
   text-align: left;
+  width: 290px;
 }
 
 .input-group label {
@@ -35,7 +36,7 @@
 
 .input-group input[type="text"],
 .input-group input[type="password"] {
-  width: calc(100% - 20px);
+  width: calc(100%);
   padding: 10px;
   border: 1px solid #ddd;
   border-radius: 4px;

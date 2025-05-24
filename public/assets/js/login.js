@@ -30,7 +30,7 @@ document.addEventListener("DOMContentLoaded", () => {
         // Here you might redirect the user or save a token
         // console.log(response);
         console.log("Login successful:", data);
-        window.location.href = `user/${data.complaint_id}`
+        window.location.href = `user/complaint`
       } else {
         // Login failed
         messageDisplay.textContent =

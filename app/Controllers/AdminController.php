@@ -17,6 +17,7 @@ class AdminController extends BaseController {
         $user = request()->getJSON(true);
 
         if($model->where('email', $user['email'])->first()){
+            session()->set('isAdminLoggedIn', true);
             return response()->setJSON(['status' => 'ok', 'message' => 'Login is successful']);
         } else {
             return response()->setJSON(['status' => 'error', 'idc']);
@@ -56,5 +57,11 @@ class AdminController extends BaseController {
             return response()->setJSON(['status' => 'error', 'message' => 'error']);
         }
 
+    }
+
+    public function logout () {
+        session()->destroy();
+
+        return redirect()->to('login/123');
     }
 }
