@@ -23,9 +23,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-Hd4Y3Qe8cUGzKvvnSODm8Z/EiA0yAY5OtkGpO5Y0kkRfA2+3YxhwYUyoySYBzXebHskhxFdul+Bb99fQSLf+g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-  <!-- Toastify CSS -->
   <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
-  <!-- Toastify JS -->
   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
 
   <title>ReportPoint Customs</title>
@@ -46,7 +44,7 @@
 
       <?php elseif (!strpos(current_url(), 'admin')): ?>
         <ul>
-          <li>Ana Səhifə</li>
+          <li><a href="<?= base_url() ?>">Ana Səhifə</a></li>
           <li>Haqqımızda</li>
           <li>Gizliliyin qorunması</li>
           <li>Prosedurlar</li>
@@ -55,13 +53,31 @@
 
       <?php else: ?>
         <ul>
-          <li>Şikayətlər</li>
+          <li><a href="<?= base_url('admin/complaints') ?>">Şikayətlər</a></li>
           <li>Statistikalar</li>
           <li><a href="<?= base_url('admin/logout') ?>">Çıxış et</a></li>
         </ul>
       <?php endif; ?>
     </div>
+    <div class="hamburger" onclick="toggleMenu()">
+      <img src="<?= base_url() ?>assets/images/image.png" alt="">
+    </div>
+
+<div class="mobile-menu" id="mobileMenu">
+  <?php if (strpos(current_url(), 'user/complaint')): ?>
+    <a href="<?= base_url('logout') ?>">Çıxış et</a>
+  <?php elseif (!strpos(current_url(), 'admin')): ?>
+    <a href="<?= base_url() ?>">Ana Səhifə</a>
+    <a href="#">Haqqımızda</a>
+    <a href="#">Gizliliyin qorunması</a>
+    <a href="#">Prosedurlar</a>
+    <a href="#">Əlaqə</a>
+  <?php else: ?>
+    <a href="<?= base_url('admin/complaints') ?>">Şikayətlər</a>
+    <a href="#">Statistikalar</a>
+    <a href="<?= base_url('admin/logout') ?>">Çıxış et</a>
+  <?php endif; ?>
+</div>
   </div>
-</body>
-</html>
+
     

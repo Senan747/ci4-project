@@ -26,3 +26,51 @@ ul {
     margin: 9px 0px;
 }
 
+
+.hamburger {
+  display: none;
+  font-size: 24px;
+  color: white;
+  cursor: pointer;
+}
+
+.mobile-menu {
+  display: none;
+  flex-direction: column;
+  background-color: #2a3538;
+  position: absolute;
+  top: 56px;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+}
+
+.mobile-menu a {
+  padding: 12px 20px;
+  border-top: 1px solid #444;
+  color: white;
+  text-decoration: none;
+}
+
+@media screen and (max-width: 768px) {
+  .header ul {
+    display: none;
+  }
+
+  .hamburger {
+    display: block;
+  }
+
+  .mobile-menu {
+    display: none;
+  }
+
+  .mobile-menu.active {
+    display: flex;
+  }
+}
+
+.hamburger img{
+  width: 40px;
+  height: 40px;
+}

@@ -13,9 +13,6 @@
   flex-direction: row;
   max-height: calc(100vh - 36px);
   height: 100%;
-
-
-  /* background-repeat: no-repeat; */
 }
 
 .image-container {
@@ -24,10 +21,6 @@
   width: 70%;
   background-image: url("../images/hero.svg");
   background-repeat: no-repeat;
-  /* img {
-    height: 100%;
-    width: 753px;
-  } */
 }
 
 .right-content {
@@ -83,3 +76,26 @@
   color: white;
 }
 
+@media screen and (max-width: 1000px) {
+
+  .image-container{
+    display: none;
+  }
+
+
+  .overlay-first {
+    display: none;
+  }
+  .hero{
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .right-content {
+    max-width: 100vw;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    background-color: #68696c;
+  }
+}

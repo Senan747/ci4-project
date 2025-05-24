@@ -357,3 +357,8 @@ exitContainer.addEventListener("click", () => {
   window.location.href = '/';
   localStorage.clear();
 })
+
+function toggleMenu() {
+  const menu = document.getElementById('mobileMenu');
+  menu.classList.toggle('active');
+}
