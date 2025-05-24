@@ -319,3 +319,7 @@ a {
   text-decoration: underline;
   color: blue;
 }
+
+.exit-container {
+  cursor: pointer;
+}

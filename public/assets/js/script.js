@@ -349,3 +349,11 @@ document
       alert("Server bağlantı xətası!");
     }
   });
+
+
+const exitContainer = document.querySelector('.exit-container');
+
+exitContainer.addEventListener("click", () => {
+  window.location.href = '/';
+  localStorage.clear();
+})
